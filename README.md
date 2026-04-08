@@ -1,6 +1,6 @@
 # 🌐  ISP Billing & Management System
 
-> **BetterNet 4.1** — A complete, full-stack billing and management solution for modern Internet Service Providers.
+> A complete, full-stack billing and management solution for modern Internet Service Providers.
 
 ![ISPNet](https://img.shields.io/badge/Version-4.1-cyan?style=for-the-badge)
 ![Laravel](https://img.shields.io/badge/Laravel-PHP-red?style=for-the-badge&logo=laravel)
@@ -251,11 +251,7 @@ Dhaka, Bangladesh
 
 ---
 
-## 📄 License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
 
 <p align="center">
   Made with ❤️ for IT WAY BD &nbsp;|&nbsp; BetterNet ISP Billing System &copy; 2024
