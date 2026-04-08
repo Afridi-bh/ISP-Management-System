@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\PackageRequest;
+use App\Models\Detail;
+use App\Models\Billing;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class AdminPackageRequestController extends Controller
+{
+    /**
+     * Display a listing of package requests
+     */
+    public function index(Request $request)
+    {
+        $search = $request->get('search');
+        
+        $packageRequestsQuery = PackageRequest::with(['customer', 'package'])
+            ->orderBy('created_at', 'desc');
+        
+        // Add search functionality
+        if ($search) {
+            $packageRequestsQuery->where(function($q) use ($search) {
+                $q->whereHas('customer', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                          ->orWhere('email', 'like', "%{$search}%")
+                          ->orWhere('phone', 'like', "%{$search}%");
+                })
+                ->orWhereHas('package', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('status', 'like', "%{$search}%");
+            });
+        }
+        
+        $packageRequests = $packageRequestsQuery->paginate(10);
+
+        $pendingCount = PackageRequest::where('status', 'pending')->count();
+        $approvedCount = PackageRequest::where('status', 'approved')->count();
+        $rejectedCount = PackageRequest::where('status', 'rejected')->count();
+
+        return view('package-requests.index', compact(
+            'packageRequests',
+            'pendingCount',
+            'approvedCount',
+            'rejectedCount',
+            'search'
+        ));
+    }
+
+    /**
+     * Display the specified package request
+     */
+    public function show(PackageRequest $packageRequest)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return redirect('/');
+        }
+
+        $packageRequest->load(['customer.detail', 'package', 'approvedBy']);
+
+        return view('package-requests.show', compact('packageRequest'));
+    }
+
+    /**
+     * Approve a package request
+     * NOTE: Does NOT modify Detail table - only marks request as approved
+     * Invoice and Billing creation are disabled for informational-only requests
+     */
+    public function approve(Request $request, PackageRequest $packageRequest)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return redirect('/')->with('error', 'Unauthorized action');
+        }
+
+        $request->validate([
+            'admin_remarks' => 'nullable|string|max:500'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $customer = $packageRequest->customer;
+            $package = $packageRequest->package;
+
+            /**
+             * IMPORTANT: We do NOT update the Detail table here
+             * Package requests are for informational purposes only
+             * Actual package assignment happens through the users.create flow
+             */
+
+            /**
+             * Create Invoice (DISABLED - Uncomment to enable)
+             */
+            // if (class_exists(\App\Models\Invoice::class)) {
+            //     \App\Models\Invoice::create([
+            //         'customer_id'    => $customer->id,
+            //         'package_name'   => $package->name,
+            //         'amount'         => $package->price,
+            //         'status'         => 'unpaid',
+            //         'due_date'       => Carbon::now()->addDays(7),
+            //         'invoice_number' => 'INV-' . strtoupper(uniqid()),
+            //     ]);
+            // }
+
+            /**
+             * Create Billing record (DISABLED - Uncomment to enable)
+             */
+            // if (class_exists(\App\Models\Billing::class)) {
+            //     $billing = new Billing();
+            //
+            //     $billing->invoice = method_exists($billing, 'generateRandomNumber')
+            //         ? $billing->generateRandomNumber()
+            //         : 'INV-' . strtoupper(uniqid());
+            //
+            //     $billing->package_name  = $package->name;
+            //     $billing->package_price = $package->price;
+            //     $billing->package_start = Carbon::now();
+            //     $billing->customer_id   = $customer->id;
+            //     $billing->save();
+            // }
+
+            /**
+             * Update package request
+             */
+            $packageRequest->update([
+                'status'        => 'approved',
+                'admin_remarks' => $request->admin_remarks,
+                'approved_at'   => Carbon::now(),
+                'approved_by'   => auth()->id()
+            ]);
+
+            /**
+             * Update customer status (DISABLED - Uncomment to enable)
+             */
+            // if (!$customer->isActive()) {
+            //     $customer->update(['status' => 'active']);
+            // }
+
+            DB::commit();
+
+            return redirect()->route('package-requests.index')
+                ->with('success', 'Package request approved successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Package Request Approval Error: ' . $e->getMessage());
+
+            return back()->with('error', 'Failed to approve request: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Reject a package request
+     */
+    public function reject(Request $request, PackageRequest $packageRequest)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return redirect('/')->with('error', 'Unauthorized action');
+        }
+
+        $request->validate([
+            'admin_remarks' => 'required|string|max:500'
+        ]);
+
+        $packageRequest->update([
+            'status'        => 'rejected',
+            'admin_remarks' => $request->admin_remarks,
+            'approved_by'   => auth()->id()
+        ]);
+
+        return redirect()->route('package-requests.index')
+            ->with('success', 'Package request rejected');
+    }
+}

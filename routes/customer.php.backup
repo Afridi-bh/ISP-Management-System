@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\CustomerLoginController;
+use App\Http\Controllers\Customer\CustomerRegisterController;
+use App\Http\Controllers\Customer\CustomerDashboardController;
+
+Route::prefix('customer')->name('customer.')->group(function () {
+
+    // Guest routes
+    Route::middleware('guest:customer')->group(function () {
+        Route::get('/login', [CustomerLoginController::class, 'show'])->name('login');
+        Route::post('/login', [CustomerLoginController::class, 'login'])->name('login.submit');
+
+        Route::get('/register', [CustomerRegisterController::class, 'show'])->name('register');
+        Route::post('/register', [CustomerRegisterController::class, 'register'])->name('register.submit');
+    });
+
+    // Authenticated routes
+    Route::middleware('auth:customer')->group(function () {
+        Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [CustomerDashboardController::class, 'profile'])->name('profile');
+        Route::get('/subscriptions', [CustomerDashboardController::class, 'subscriptions'])->name('subscriptions');
+        Route::get('/invoices', [CustomerDashboardController::class, 'invoices'])->name('invoices');
+        Route::get('/payments', [CustomerDashboardController::class, 'payments'])->name('payments');
+        Route::get('/support', [CustomerDashboardController::class, 'support'])->name('support');
+        
+        Route::get('/logout', [CustomerLoginController::class, 'logout'])->name('logout');
+    });
+});

@@ -1,0 +1,526 @@
+/* ===================================================
+   TAILWIND CORE
+=================================================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================================
+   ROOT & HTML SETUP - CRITICAL FOR BACKGROUNDS
+=================================================== */
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===================================================
+   GLOBAL BODY STYLING - ALWAYS VISIBLE BACKGROUNDS
+=================================================== */
+body {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 50%, #fce7f3 100%) !important;
+    background-attachment: fixed !important;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Guest/Login Pages - Vibrant Blue-Teal-Cyan Gradient */
+body.guest-bg {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 50%, #0891b2 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Dashboard Pages - Soft Purple Gradient */
+body.dashboard-bg {
+    background: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 50%, #fbcfe8 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Dark Mode */
+.dark body {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%) !important;
+    background-attachment: fixed !important;
+    color: white;
+}
+
+/* ===================================================
+   ANIMATED BACKGROUND PATTERNS
+=================================================== */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* ===================================================
+   SIDEBAR STYLING
+=================================================== */
+.sidebar-container {
+    background: linear-gradient(180deg, #4f46e5 0%, #3730a3 50%, #2563eb 100%);
+    color: white;
+    min-height: 100vh;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.sidebar-logo img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 1rem auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.sidebar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================================
+   SIDEBAR LINKS
+=================================================== */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(6px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: rgba(255, 255, 255, 0.1);
+    transition: width 0.3s ease;
+}
+
+.sidebar-link:hover::before {
+    width: 100%;
+}
+
+.sidebar-link.active,
+.sidebar-link[data-active="true"] {
+    background: rgba(255, 255, 255, 0.25);
+    font-weight: 700;
+    color: white !important;
+    border-left: 4px solid white;
+    padding-left: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-link svg,
+.sidebar-link i {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-link:hover svg,
+.sidebar-link:hover i {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+/* ===================================================
+   CARDS & CONTAINERS
+=================================================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+.white-blur {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===================================================
+   DASHBOARD SPECIFIC STYLES
+=================================================== */
+.dashboard-content {
+    background: transparent !important;
+}
+
+.dashboard-glass {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .dashboard-glass {
+    background: rgba(17, 24, 39, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================================
+   BUTTONS & INPUTS
+=================================================== */
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    transform: translateY(-2px);
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(229, 231, 235, 0.8);
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.input-field:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: white;
+}
+
+/* ===================================================
+   ANIMATIONS
+=================================================== */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pulse-slow {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.bounce-in {
+    animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===================================================
+   UTILITY CLASSES
+=================================================== */
+.smooth-transition {
+    transition: all 0.3s ease;
+}
+
+.shadow-soft {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-medium {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-strong {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-glow {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.hover-lift {
+    transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================================================
+   SCROLLBAR STYLING
+=================================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4f46e5, #2563eb);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4338ca, #1d4ed8);
+}
+
+/* ===================================================
+   LOADING STATES
+=================================================== */
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===================================================
+   RESPONSIVE DESIGN
+=================================================== */
+@media (max-width: 768px) {
+    .sidebar-container {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        transition: left 0.3s ease;
+        z-index: 50;
+    }
+    
+    .sidebar-container.mobile-open {
+        left: 0;
+    }
+
+    body {
+        background-attachment: scroll !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .glass-card {
+        padding: 1rem;
+    }
+
+    .white-blur {
+        padding: 1.25rem;
+    }
+}
+
+/* ===================================================
+   PRINT STYLES
+=================================================== */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    .sidebar-container,
+    .no-print {
+        display: none !important;
+    }
+
+    .glass-card,
+    .white-blur,
+    .glass-box {
+        background: white !important;
+        backdrop-filter: none !important;
+        border: 1px solid #e5e7eb !important;
+    }
+}
