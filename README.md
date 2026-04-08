@@ -2,12 +2,12 @@
 
 > **BetterNet 4.1** — A complete, full-stack billing and management solution for modern Internet Service Providers.
 
-![BetterNet](https://img.shields.io/badge/Version-4.1-cyan?style=for-the-badge)
+![ISPNet](https://img.shields.io/badge/Version-4.1-cyan?style=for-the-badge)
 ![Laravel](https://img.shields.io/badge/Laravel-PHP-red?style=for-the-badge&logo=laravel)
 ![Mikrotik](https://img.shields.io/badge/Mikrotik-API-blue?style=for-the-badge)
 ![bKash](https://img.shields.io/badge/bKash-Payment-pink?style=for-the-badge)
 ![Stripe](https://img.shields.io/badge/Stripe-Payment-6772e5?style=for-the-badge&logo=stripe)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
 
 ---
 
@@ -200,14 +200,8 @@ MAIL_PASSWORD=your_mail_password
 
 ## 📸 Screenshots
 
-### 🏠 Landing Page
-The public-facing landing page showcases all features with access to both Admin and Customer portals.
+![Uploading Screenshot_23-1-2026_005_127.0.0.1.jpeg…]()
 
-### 📊 Admin Dashboard
-Real-time overview of Total Bills, Total Payments, Bills This Month, and Monthly Billing & Payments chart.
-
-### 📦 Package Management
-Create and manage internet packages per router with pricing in BDT and package-wise user details.
 
 ---
 
