@@ -200,7 +200,7 @@ MAIL_PASSWORD=your_mail_password
 
 ## 📸 Screenshots
 
-![Uploading Screenshot_23-1-2026_005_127.0.0.1.jpeg…]()
+![Screenshot_23-1-2026_005_127 0 0 1](https://github.com/user-attachments/assets/ad4a0893-5002-40a8-95a3-27f9fe5b7249)
 
 
 ---
