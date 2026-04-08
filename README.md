@@ -1,4 +1,4 @@
-# 🌐 BetterNet — ISP Billing & Management System
+# 🌐  ISP Billing & Management System
 
 > **BetterNet 4.1** — A complete, full-stack billing and management solution for modern Internet Service Providers.
 
